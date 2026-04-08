@@ -4,11 +4,29 @@ phases:
   install:
     runtime-versions:
       java: corretto17
+    commands:
+      - echo Installing dependencies
+
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 588738572310.dkr.ecr.us-east-1.amazonaws.com
+
+      - REPOSITORY_URI=588738572310.dkr.ecr.us-east-1.amazonaws.com/geofort-repo
+      - IMAGE_TAG=latest
 
   build:
     commands:
       - echo Build started
       - mvn clean package
+
+      - echo Building Docker image
+      - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
+
+  post_build:
+    commands:
+      - echo Pushing image to ECR
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
 
 artifacts:
   files:
