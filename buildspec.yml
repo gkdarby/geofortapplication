@@ -5,14 +5,20 @@ phases:
     runtime-versions:
       java: corretto17
     commands:
-      - echo Installing dependencies
+      - echo "Install phase started"
 
   build:
     commands:
-      - echo Build started
+      - echo "Build started on $(date)"
       - mvn clean package
+
+  post_build:
+    commands:
+      - echo "Build completed on $(date)"
+      - ls -l target
 
 artifacts:
   files:
-    - target/*.jar
-    - target/*.war
+    - appspec.yml
+    - scripts/**/*
+    - target/hello-world-web-app.war
