@@ -3,6 +3,8 @@ set -e
 
 echo "Deploying GeoFort WAR..."
 
+systemctl stop tomcat10 || true
+
 rm -f /var/lib/tomcat10/webapps/ROOT.war
 rm -rf /var/lib/tomcat10/webapps/ROOT
 

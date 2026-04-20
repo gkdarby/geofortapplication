@@ -11,11 +11,6 @@ hooks:
       timeout: 900
       runas: root
 
-  ApplicationStop:
-    - location: scripts/stop_server.sh
-      timeout: 300
-      runas: root
-
   AfterInstall:
     - location: scripts/deploy_war.sh
       timeout: 900
