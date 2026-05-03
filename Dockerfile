@@ -11,13 +11,11 @@ FROM tomcat:10.1-jdk17
 
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Option A: app served at /hello-world-web-app
 COPY --from=build /app/target/hello-world-web-app.war \
-  /usr/local/tomcat/webapps/hello-world-web-app.war
+  /usr/local/tomcat/webapps/ROOT.war
 
 # Option B (alternative): serve at /
 # COPY --from=build /app/target/hello-world-web-app.war /usr/local/tomcat/webapps/ROOT.war
 
 EXPOSE 8080
 CMD ["catalina.sh", "run"]
-
